@@ -32,10 +32,13 @@ $ python train.py
 
 Predict an annotation of [CINC2017 data](https://physionet.org/challenge/2017/) or your own data(csv file)
 
-It randomly chooses one of data, 
+It randomly chooses one of data, and predict the slices of the signal.
+
 ```
-$ python predict.py
+$ python predict.py --cinc_download True
 ```
+--cinc_download branch is used at first to download the CINC2017 data.
+
 See config.py and customize your parameters or learn better way to train and test 
 
 
