@@ -2,7 +2,9 @@
 
 ## ECG classification using MIT-BIH dataset 
 
-This repo is an implementation of https://www.nature.com/articles/s41591-018-0268-3 and https://arxiv.org/abs/1707.01836 
+This repo is an implementation of https://www.nature.com/articles/s41591-018-0268-3 and https://arxiv.org/abs/1707.01836
+
+and focus on training using a MIT-BIH dataset. If you want to train using CINC or open irhythm data, see the open source which the authors of the original research paper have coded at https://github.com/awni/ecg
 
 Introduction to MIT-BIH dataset at physionet : https://physionet.org/physiobank/database/mitdb/
 
