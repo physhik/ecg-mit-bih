@@ -2,6 +2,8 @@
 
 ## ECG classification using MIT-BIH dataset 
 
+This repo is an implementation of https://www.nature.com/articles/s41591-018-0268-3 and https://arxiv.org/abs/1707.01836 
+
 Introduction to MIT-BIH dataset at physionet : https://physionet.org/physiobank/database/mitdb/
 
 ### Dependency 
@@ -48,10 +50,12 @@ I presented a bit more about ECG classfications on my personal blog, http://phys
 
 ### Reference to 
 
+The original research papers
 https://www.nature.com/articles/s41591-018-0268-3
-
 https://arxiv.org/abs/1707.01836
 
+The open source by authors
 https://github.com/awni/ecg
 
+also noticable 
 https://github.com/fernandoandreotti/cinc-challenge2017/tree/master/deeplearn-approach
