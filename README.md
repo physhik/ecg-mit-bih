@@ -26,7 +26,7 @@ I recommend using a vitual enviroment for Python.
 ```
 $ git clone https://github.com/physhik/ecg-mit-bih.git
 $ cd ecg-mit-bih/src
-$ python data.py
+$ python data.py --downloading True
 $ python train.py
 ```
 
