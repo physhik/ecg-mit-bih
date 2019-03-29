@@ -1,5 +1,26 @@
+# For this repo
+
+models/
+results/
+dataset/
+logs/
+training2017/
+
+# macOS
+
+.DS_Store
+
+
+
+
+
+###
+# Python gitignore 
+###
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
+*.pyc
 *.py[cod]
 *$py.class
 
