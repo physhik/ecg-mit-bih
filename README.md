@@ -13,7 +13,7 @@ Introduction to MIT-BIH dataset at physionet : https://physionet.org/physiobank/
 Consistent with the environment of Google colab with wfdb, deepdish installations. 
 
 - Python >= 3.6.7
-- kerass
+- keras
 - scikit-learn
 - wfdb
 - deepdish
