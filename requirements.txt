@@ -4,5 +4,5 @@ sklearn
 wfdb
 keras
 six 
-numpy
+numpy==1.15.4
 
