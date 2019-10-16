@@ -10,7 +10,7 @@ Introduction to MIT-BIH dataset at physionet : https://physionet.org/physiobank/
 
 ### Dependency 
 
-Consistent with the environment of Google colab with wfdb, deepdish installations. 
+Consistent with the environment of Google colab with wfdb, deepdish installations and numpy reinstallation. 
 
 - Python >= 3.6.7
 - keras
@@ -27,7 +27,9 @@ I recommend using a vitual enviroment for Python.
 
 ```
 $ git clone https://github.com/physhik/ecg-mit-bih.git
-$ cd ecg-mit-bih/src
+$ cd ecg-mit-bih
+$ pip install -r requirements.txt
+$ cd src
 $ python data.py --downloading True
 $ python train.py
 ```
