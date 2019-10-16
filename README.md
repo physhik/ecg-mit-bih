@@ -18,7 +18,7 @@ Consistent with the environment of Google colab with wfdb, deepdish installation
 - wfdb
 - deepdish
 - scipy
-- numpy
+- numpy==1.15.4
 - tqdm
 
 I recommend using a vitual enviroment for Python. 
