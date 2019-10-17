@@ -9,7 +9,7 @@ import os
 
 def cincData(config):
     if config.cinc_download:
-      cmd = "curl -O https://physionet.org/challenge/2017/training2017.zip"
+      cmd = "curl -O https://archive.physionet.org/challenge/2017/training2017.zip"
       os.system(cmd)
       os.system("unzip training2017.zip")
     num = config.num

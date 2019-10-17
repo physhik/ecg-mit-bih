@@ -176,7 +176,13 @@ def add_noise(config):
     noises["trainset"] = list()
     noises["testset"] = list() 
     import csv
-    testlabel = list(csv.reader(open('training2017/REFERENCE.csv')))
+    try:
+        testlabel = list(csv.reader(open('training2017/REFERENCE.csv')))
+    except:
+        cmd = "curl -O https://archive.physionet.org/challenge/2017/training2017.zip"
+        os.system(cmd)
+        os.system("unzip training2017.zip")
+        testlabel = list(csv.reader(open('training2017/REFERENCE.csv')))
     for i, label in enumerate(testlabel):
       if label[1] == '~':
         filename = 'training2017/'+ label[0] + '.mat'
