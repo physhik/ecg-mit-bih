@@ -48,6 +48,10 @@ $ python predict.py --cinc_download True
 See config.py and customize your parameters or learn better way to train and test 
 
 
+### Jupyter notebook example
+
+In case, you do not have a GPU above a decent performance, you might be able to use Google colab. Follow the [Jupyter notebook](https://github.com/physhik/ecg-mit-bih/blob/master/src/practice/ecg_mit.ipynb).
+
 ### Introduction to ECG 
 
 I presented a bit more about ECG classfications on my personal blog, http://physhik.com
