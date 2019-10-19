@@ -20,7 +20,7 @@ Consistent with the environment of Google colab with wfdb, deepdish installation
 - scipy
 - numpy==1.15.4
 - tqdm
-
+--> If you are using Keras 2.3.1, you might have to downgrade to 2.2.4 in order to avoid `Value Error`.
 I recommend using a vitual enviroment for Python. 
 
 ### Data setup and train 
