@@ -13,13 +13,14 @@ Introduction to MIT-BIH dataset at physionet : https://physionet.org/physiobank/
 Consistent with the environment of Google colab with wfdb, deepdish installations and numpy reinstallation. 
 
 - Python >= 3.6.7
-- keras
-- scikit-learn
-- wfdb
-- deepdish
-- scipy
+- keras== 2.2.5 
+- scikit-learn==0.21.3
+- wfdb==2.2.1
+- deepdish==0.3.6
+- scipy==1.3.1
 - numpy==1.15.4
-- tqdm
+- tqdm==4.28.1
+- six==1.12.0
 
 I recommend using a vitual enviroment for Python. 
 

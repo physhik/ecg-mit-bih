@@ -5,6 +5,7 @@ results/
 dataset/
 logs/
 training2017/
+*.zip
 
 # macOS
 
