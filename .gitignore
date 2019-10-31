@@ -12,7 +12,8 @@ training2017/
 .DS_Store
 
 
-
+# limit language detection in Github repo 
+.gitattributes
 
 
 ###
