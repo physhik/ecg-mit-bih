@@ -13,27 +13,32 @@ Introduction to MIT-BIH dataset at physionet : https://physionet.org/physiobank/
 Consistent with the environment of Google colab with wfdb, deepdish installations and numpy reinstallation. 
 
 - Python >= 3.6.7
-- keras== 2.2.5 
+- keras==2.2.5
+- tensorflow==1.15.0 
 - scikit-learn==0.21.3
 - wfdb==2.2.1
 - deepdish==0.3.6
 - scipy==1.3.1
 - numpy==1.15.4
-- tqdm==4.28.1
+- tqdm==4.36.1
 - six==1.12.0
+- Flask==1.1.1
+- werkzeug==0.16.0
+- virtualenv==16.7.7
 
-I recommend using a vitual enviroment for Python. 
+
+
 
 ### Data setup and train 
 
+I recommend using a vitual enviroment for Python, so run setup.sh in order to install and to activate it. 
 ```
 $ git clone https://github.com/physhik/ecg-mit-bih.git
 $ cd ecg-mit-bih
-$ pip install -r requirements.txt
-$ cd src
-$ python data.py --downloading True
-$ python train.py
+$ sh setup sh.
 ```
+Now you have a trained model for ECG classification 
+
 
 ### Test
 
@@ -41,8 +46,9 @@ Predict an annotation of [CINC2017 data](https://physionet.org/challenge/2017/) 
 
 It randomly chooses one of data, and predict the slices of the signal.
 
+Run predict.py in the virtual environment we have already set up.
 ```
-$ python predict.py --cinc_download True
+(flaskapp) $ ./flaskapp/bin/python predict.py --cinc_download True
 ```
 --cinc_download branch is used at first to download the CINC2017 data.
 
@@ -53,9 +59,29 @@ See config.py and customize your parameters or learn better way to train and tes
 
 In case, you do not have a GPU above a decent performance, you might be able to use Google colab. Follow the [Jupyter notebook](https://github.com/physhik/ecg-mit-bih/blob/master/src/practice/ecg_mit.ipynb).
 
+
+### Flask web app
+
+The flask web app is based on the 500 stared [Github repo](https://github.com/mtobeiyf/keras-flask-deploy-webapp). 
+
+#### Run app.py
+```
+(flaskapp) $ ./flaskapp/bin/python app.py
+```
+
+![png](src/static/asset/capture1.png)
+
+and choose a csv heart heat signal and click predict, and see the result. 
+
+![png](src/static/asset/capture2.png)
+
+I have put one csv file in static/asset directory. The first value of the column become sample rate of the web app. If you use your own heart beat csv file, insert the sample at the first, too.   
+
 ### Introduction to ECG 
 
-I presented a bit more about ECG classfications on my personal blog, http://physhik.com
+I presented a bit more about ECG classfications on my personal blog, http://physhik.com 
+
+Find the posts from tags or categories easily.  
 
 ### Reference to 
 
