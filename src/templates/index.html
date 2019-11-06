@@ -1,0 +1,36 @@
+{% extends "base.html" %} {% block content %}
+
+<h2> csv file less than 5MB only! </h2>
+
+<h5> Code		Description      </h5>
+    N	:	Normal beat   <br>
+    A	:	Atrial premature beat <br>
+    Venticular	:	Premature ventricular contraction <br>
+    F	:	Fusion of ventricular and normal beat <br>
+    Paced	:	Paced beat <br>
+    Noise	:	Noise (not kind of heart beat) <br>
+
+
+<div>
+    
+    <form id="upload-file" method="post" enctype="multipart/form-data">
+        <label for="imageUpload" class="upload-label">
+            Choose...
+        </label>
+        <input type="file" name="file" id="imageUpload" accept = ".csv">
+    </form>
+
+    <div class="image-section" style="display:none;">
+        <div>
+            <button type="button" class="btn btn-primary btn-lg " id="btn-predict">Predict!</button>
+        </div>
+    </div>
+
+    <div class="loader" style="display:none;"></div>
+    <h5 id="result">
+        <span> </span>
+    </h5>
+
+</div>
+
+{% endblock %}

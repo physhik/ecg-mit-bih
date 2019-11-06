@@ -14,7 +14,16 @@ def cincData(config):
       os.system("unzip training2017.zip")
     num = config.num
     import csv
-    testlabel = list(csv.reader(open('training2017/REFERENCE.csv')))
+    testlabel = []
+
+    with open('training2017/REFERENCE.csv') as csv_file:
+      csv_reader = csv.reader(csv_file, delimiter=',')
+      line_count = 0
+      for row in csv_reader:
+        testlabel.append([row[0],row[1]])
+        #print(row[0], row[1])
+        line_count += 1
+      print(f'Processed {line_count} lines.')
     if num == None:
       high = len(testlabel)-1
       num = np.random.randint(1,high)
@@ -48,18 +57,20 @@ def predictByPart(data, peaks):
     classesM = ['N','Ventricular','Paced','A','F','Noise']#,'L','R','f','j','E','a','J','Q','e','S']
     predicted = list()
     result = ""
+    counter = [0]* len(classesM)
     from keras.models import load_model
     model = load_model('models/MLII-latest.hdf5')
-    
+    config = get_config() 
     for i, peak in enumerate(peaks[3:-1]):
       total_n =len(peaks)
       start, end =  peak-config.input_size//2 , peak+config.input_size//2
       prob = model.predict(data[:, start:end])
       prob = prob[:,0]
       ann = np.argmax(prob)
+      counter[ann]+=1
       if classesM[ann] != "N":
         print("The {}/{}-record classified as {} with {:3.1f}% certainty".format(i,total_n,classesM[ann],100*prob[0,ann]))
-      result += "("+ classesM[ann] +":" + str(round(100*prob[0,ann],1)) + " %)"
+      result += "("+ classesM[ann] +":" + str(round(100*prob[0,ann],1)) + "%)"
       predicted.append([classesM[ann],prob])
       if classesM[ann] != 'N' and prob[0,ann] > 0.95:
         import matplotlib.pyplot as plt
@@ -67,6 +78,7 @@ def predictByPart(data, peaks):
         mkdir_recursive('results')
         plt.savefig('results/hazard-'+classesM[ann]+'.png', format="png", dpi = 300)
         plt.close()
+    result += "{}-N, {}-Venticular, {}-Paced, {}-A, {}-F, {}-Noise".format(counter[0], counter[1], counter[2], counter[3], counter[4], counter[5])
     return predicted, result
 
 def main(config):
