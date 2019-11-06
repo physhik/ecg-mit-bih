@@ -15,6 +15,7 @@ app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024
 global classesM
 classesM = ['N','V','L','R','Paced','A','F']#,'f','j','E','a','J','Q','e','S']
 
+print('Check http://127.0.0.1:5000/')
 
 
 def model_predict(img_path):
@@ -64,8 +65,8 @@ def upload():
 
 if __name__ == '__main__':
     config = get_config()
-    app.run(port=5001, debug=True)
+    #app.run(port=5001, debug=True)
 
     # Serve the app with gevent
-    #http_server = WSGIServer(('', 5003), app)
-    #http_server.serve_forever()
+    http_server = WSGIServer(('', 5000), app)
+    http_server.serve_forever()

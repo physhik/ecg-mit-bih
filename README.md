@@ -14,7 +14,7 @@ Consistent with the environment of Google colab with wfdb, deepdish installation
 
 - Python >= 3.6.7
 - keras==2.2.5
-- tensorflow==1.15.0 
+- tensorflow==2.0.0 
 - scikit-learn==0.21.3
 - wfdb==2.2.1
 - deepdish==0.3.6
@@ -23,6 +23,7 @@ Consistent with the environment of Google colab with wfdb, deepdish installation
 - tqdm==4.36.1
 - six==1.12.0
 - Flask==1.1.1
+- gevent==1.4.0
 - werkzeug==0.16.0
 - virtualenv==16.7.7
 
