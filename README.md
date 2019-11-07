@@ -78,6 +78,29 @@ and choose a csv heart heat signal and click predict, and see the result.
 
 I have put one csv file in static/asset directory. The first value of the column become sample rate of the web app. If you use your own heart beat csv file, insert the sample at the first, too.   
 
+
+### Using Docker, Buld and run an image for the ECG trained model.
+
+After installation of Docker, 
+
+```
+$ docker build -t ecg-app .  
+$ docker run -d -p 5000:5000 ecg-app
+```
+
+### Pull an built-image from Docker hub
+
+Or for your convenience, pull the image from Docker hub by 
+
+```
+$ docker pull physhik/ecg-app:1 
+$ docker run -d -p 5000:5000 physhik/ecg-app:1
+```
+
+and then open http://localhost:5000 after a while installing the app in the container. 
+
+
+
 ### Introduction to ECG 
 
 I presented a bit more about ECG classfications on my personal blog, http://physhik.com 
