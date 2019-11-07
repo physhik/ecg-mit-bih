@@ -11,9 +11,6 @@ WORKDIR /usr/src/app/src/
 
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
-RUN pip install numpy==1.16.0
-RUN python -V
-RUN pwd 
 
 EXPOSE 5000
 CMD ["python", "app.py"]
