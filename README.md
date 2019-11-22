@@ -36,7 +36,12 @@ I recommend using a vitual enviroment for Python, so run setup.sh in order to in
 ```
 $ git clone https://github.com/physhik/ecg-mit-bih.git
 $ cd ecg-mit-bih
-$ sh setup sh.
+$ pip install virtualenv
+$ virtualenv -p python ecg-env
+$ source ./ecg-env/bin/activate
+(ecg-env) $ pip install -r requrirements.txt
+(ecg-env) $ python src/data.py --downloading True
+(eng-env) $ python src/train.py
 ```
 Now you have a trained model for ECG classification 
 
@@ -49,11 +54,11 @@ It randomly chooses one of data, and predict the slices of the signal.
 
 Run predict.py in the virtual environment we have already set up.
 ```
-(flaskapp) $ ./flaskapp/bin/python predict.py --cinc_download True
+(ecg-env) $ python src/predict.py --cinc_download True
 ```
 --cinc_download branch is used at first to download the CINC2017 data.
 
-See config.py and customize your parameters or learn better way to train and test 
+See src/config.py and customize your parameters or learn better way to train and test 
 
 
 ### Jupyter notebook example
@@ -67,7 +72,7 @@ The flask web app is based on the 500 stared [Github repo](https://github.com/mt
 
 #### Run app.py
 ```
-(flaskapp) $ ./flaskapp/bin/python app.py
+(ecg-env) $ python src/app.py
 ```
 
 ![png](src/static/asset/capture1.png)
