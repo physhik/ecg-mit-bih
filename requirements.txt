@@ -6,7 +6,7 @@ keras==2.2.5
 six==1.12.0 
 numpy==1.15.4
 keras==2.2.5
-tensorflow==1.15.0 
+tensorflow==1.15.2 
 deepdish==0.3.6
 Flask==1.1.1
 gevent==1.4.0
