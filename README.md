@@ -108,7 +108,7 @@ and then open http://localhost:5000 after a while installing the app in the cont
 
 ### Introduction to ECG 
 
-I presented a bit more about ECG classfications on my personal blog, http://physhik.com 
+I presented a bit more about ECG classfications on my personal blog, http://physhik.github.io 
 
 Find the posts from tags or categories easily.  
 
