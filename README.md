@@ -39,7 +39,7 @@ $ cd ecg-mit-bih
 $ pip install virtualenv
 $ virtualenv -p python ecg-env
 $ source ./ecg-env/bin/activate
-(ecg-env) $ pip install -r requrirements.txt
+(ecg-env) $ pip install -r requirements.txt
 (ecg-env) $ python src/data.py --downloading True
 (eng-env) $ python src/train.py
 ```
