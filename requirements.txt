@@ -10,5 +10,5 @@ tensorflow==1.15.0
 deepdish==0.3.6
 Flask==1.1.1
 gevent==1.4.0
-werkzeug==0.16.0
+werkzeug==2.2.3
 virtualenv==16.7.7
