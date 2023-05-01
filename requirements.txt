@@ -8,7 +8,7 @@ numpy==1.15.4
 keras==2.2.5
 tensorflow==1.15.0 
 deepdish==0.3.6
-Flask==1.1.1
+Flask==2.3.2
 gevent==1.4.0
 werkzeug==0.16.0
 virtualenv==16.7.7
