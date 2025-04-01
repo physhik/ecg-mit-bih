@@ -5,6 +5,7 @@ from __future__ import division, print_function
 import numpy as np
 from config import get_config
 from utils import *
+from graph import *
 import os 
 
 def cincData(config):
@@ -43,15 +44,17 @@ def cincData(config):
 def predict(data, label, peaks, config):
     classesM = ['N','Ventricular','Paced','A','F','Noise']
     predicted, result  = predictByPart(data, peaks)
+    print("The predicted", predicted)
     sumPredict = sum(predicted[x][1] for x in range(len(predicted)))
     avgPredict = sumPredict/len(predicted)
     print("The average of the predict is:", avgPredict)
-    print("The most predicted label is {} with {:3.1f}% certainty".format(classesM[avgPredict.argmax()], 100*max(avgPredict[0])))
-    sec_idx = avgPredict.argsort()[0][-2]
-    print("The second predicted label is {} with {:3.1f}% certainty".format(classesM[sec_idx], 100*avgPredict[0][sec_idx]))
+    print("The most predicted label is {} with {:3.1f}% certainty".format(classesM[avgPredict.argmax()], 100*max(avgPredict)))
+    print("avgPredict", avgPredict)
+    sec_idx = avgPredict.argsort()[-2]
+    print("The second predicted label is {} with {:3.1f}% certainty".format(classesM[sec_idx], 100*avgPredict[sec_idx]))
     print("The original label of the record is " + label)
     if config.upload:
-      return predicted, classesM[avgPredict.argmax()], 100*max(avgPredict[0])
+      return predicted, classesM[avgPredict.argmax()], 100*max(avgPredict)
 
 def predictByPart(data, peaks):
     classesM = ['N','Ventricular','Paced','A','F','Noise']#,'L','R','f','j','E','a','J','Q','e','S']
@@ -59,20 +62,27 @@ def predictByPart(data, peaks):
     result = ""
     counter = [0]* len(classesM)
     from keras.models import load_model
-    model = load_model('models/MLII-latest.hdf5')
+    model = load_model(
+    'models/MLII-latest.keras', 
+    custom_objects={
+        'zeropad': zeropad,
+        'zeropad_output_shape': zeropad_output_shape
+      }
+    )
     config = get_config() 
     for i, peak in enumerate(peaks[3:-1]):
       total_n =len(peaks)
       start, end =  peak-config.input_size//2 , peak+config.input_size//2
       prob = model.predict(data[:, start:end])
-      prob = prob[:,0]
+      prob = prob[0]
       ann = np.argmax(prob)
       counter[ann]+=1
+      
       if classesM[ann] != "N":
-        print("The {}/{}-record classified as {} with {:3.1f}% certainty".format(i,total_n,classesM[ann],100*prob[0,ann]))
-      result += "("+ classesM[ann] +":" + str(round(100*prob[0,ann],1)) + "%)"
+        print("The {}/{}-record classified as {} with {:3.1f}% certainty".format(i,total_n,classesM[ann],100*prob[ann]))
+      result += "("+ classesM[ann] +":" + str(round(100*prob[ann],1)) + "%)"
       predicted.append([classesM[ann],prob])
-      if classesM[ann] != 'N' and prob[0,ann] > 0.95:
+      if classesM[ann] != 'N' and prob[ann] > 0.95:
         import matplotlib.pyplot as plt
         plt.plot(data[:, start:end][0,:,0],)
         mkdir_recursive('results')

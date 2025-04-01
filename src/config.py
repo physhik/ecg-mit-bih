@@ -43,7 +43,6 @@ predict_arg.add_argument('--cinc_download', type=bool, default = False)
 
 
 
-
 def get_config():
     config, unparsed = parser.parse_known_args()
 

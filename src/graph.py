@@ -3,6 +3,25 @@ from keras.models import Model
 from keras.layers import Input, Conv1D, Dense, add, Flatten, Dropout,MaxPooling1D, Activation, BatchNormalization, Lambda
 from keras import backend as K
 from keras.optimizers import Adam
+from keras.saving import register_keras_serializable
+import tensorflow as tf
+
+@register_keras_serializable(package="custom")
+def zeropad(x):
+    """ 
+    zeropad and zeropad_output_shapes are from 
+    https://github.com/awni/ecg/blob/master/ecg/network.py
+    """
+    y = tf.zeros_like(x)
+    return tf.concat([x, y], axis=2)
+
+@register_keras_serializable(package="custom")
+def zeropad_output_shape(input_shape):
+    shape = list(input_shape)
+    assert len(shape) == 3
+    shape[2] *= 2
+    return tuple(shape)
+
 
 def ECG_model(config):
     """ 
@@ -43,19 +62,6 @@ def ECG_model(config):
         filter_length = config.filter_length
         n_blocks = 15
         for block_index in range(n_blocks):
-            def zeropad(x):
-                """ 
-                zeropad and zeropad_output_shapes are from 
-                https://github.com/awni/ecg/blob/master/ecg/network.py
-                """
-                y = K.zeros_like(x)
-                return K.concatenate([x, y], axis=2)
-
-            def zeropad_output_shape(input_shape):
-                shape = list(input_shape)
-                assert len(shape) == 3
-                shape[2] *= 2
-                return tuple(shape)
 
             subsample_length = 2 if block_index % 2 == 0 else 1
             shortcut = MaxPooling1D(pool_size=subsample_length)(layer)
@@ -85,14 +91,13 @@ def ECG_model(config):
         return layer
 
     def output_block(layer, config):
-        from keras.layers.wrappers import TimeDistributed
         layer = BatchNormalization()(layer)
         layer = Activation('relu')(layer)
-        #layer = Flatten()(layer)
-        outputs = TimeDistributed(Dense(len_classes, activation='softmax'))(layer)
+        layer = Flatten()(layer)
+        outputs = Dense(len_classes, activation='softmax')(layer)
         model = Model(inputs=inputs, outputs=outputs)
         
-        adam = Adam(lr=0.1, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
+        adam = Adam(learning_rate=0.1, beta_1=0.9, beta_2=0.999, epsilon=1e-7, amsgrad=False)
         model.compile(optimizer= adam,
                   loss='categorical_crossentropy',
                   metrics=['accuracy'])

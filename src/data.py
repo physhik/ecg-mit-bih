@@ -33,6 +33,7 @@ import os
 from tqdm import tqdm
 import numpy as np
 import random
+import h5py
 from utils import *
 from config import get_config
 
@@ -88,7 +89,7 @@ def preprocess( split ):
               # remove some of "N" which breaks the balance of dataset 
               if len(annSymbol) == 1 and (annSymbol[0] in classes) and (annSymbol[0] != "N" or np.random.random()<0.15):
                 to_dict(annSymbol[0])
- 
+        print("processing data...")
         dataprocess()
         noises = add_noise(config)
         for feature in ["MLII", "V1"]: 
@@ -105,15 +106,19 @@ def preprocess( split ):
             
             noise_label = np.array([noise_label] * size) 
             datalabel[feature] = np.concatenate((l, noise_label))
-        import deepdish as dd
-        dd.io.save(datasetname, datadict)
-        dd.io.save(labelsname, datalabel)
+
+        with h5py.File(datasetname, 'w') as f:
+            for key, data in datadict.items():
+                f.create_dataset(key, data=data)
+        with h5py.File(labelsname, 'w') as f:
+            for key, data in datalabel.items():
+                f.create_dataset(key, data=data)        
 
     if split:
-        dataSaver(trainset, 'dataset/train.hdf5', 'dataset/trainlabel.hdf5')
-        dataSaver(testset, 'dataset/test.hdf5', 'dataset/testlabel.hdf5')
+        dataSaver(trainset, 'dataset/train.keras', 'dataset/trainlabel.keras')
+        dataSaver(testset, 'dataset/test.keras', 'dataset/testlabel.keras')
     else:
-        dataSaver(nums, 'dataset/targetdata.hdf5', 'dataset/labeldata.hdf5')
+        dataSaver(nums, 'dataset/targetdata.keras', 'dataset/labeldata.keras')
 
 def main(config):
     def Downloadmitdb():
@@ -129,6 +134,7 @@ def main(config):
 
     if config.downloading:
         Downloadmitdb()
+        #print("do not download")
     return preprocess(config.split)
 
 if __name__=="__main__":

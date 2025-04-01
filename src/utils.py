@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.metrics import confusion_matrix, roc_auc_score, roc_curve, precision_recall_curve, f1_score, classification_report
 import os
+import h5py
 
 def mkdir_recursive(path):
   if path == "":
@@ -16,19 +17,42 @@ def mkdir_recursive(path):
     os.mkdir(path)
 
 def loaddata(input_size, feature):
-    import deepdish.io as ddio
     mkdir_recursive('dataset')
-    trainData = ddio.load('dataset/train.hdf5')
-    testlabelData= ddio.load('dataset/trainlabel.hdf5')
+    print("Loading training data...")
+    with h5py.File('dataset/train.keras', 'r') as f:
+        trainData = {key: f[key][...] for key in f.keys()}
+        
+    print("Loading training labels...")
+    with h5py.File('dataset/trainlabel.keras', 'r') as f:
+        testlabelData = {key: f[key][...] for key in f.keys()}
+        
+    print("Available features in training data:", list(trainData.keys()))
+    print("Available features in label data:", list(testlabelData.keys()))
+        
     X = np.float32(trainData[feature])
     y = np.float32(testlabelData[feature])
+    print("Training shapes before shuffle - X:", X.shape, "y:", y.shape)
+    print("Any NaN in X:", np.any(np.isnan(X)), "y:", np.any(np.isnan(y)))
+    
     att = np.concatenate((X,y), axis=1)
     np.random.shuffle(att)
-    X , y = att[:,:input_size], att[:, input_size:]
-    valData = ddio.load('dataset/test.hdf5')
-    vallabelData= ddio.load('dataset/testlabel.hdf5')
+    X, y = att[:,:input_size], att[:, input_size:]
+    print("Training shapes after shuffle - X:", X.shape, "y:", y.shape)
+    print("Any NaN after shuffle - X:", np.any(np.isnan(X)), "y:", np.any(np.isnan(y)))
+    
+    print("Loading validation data...")
+    with h5py.File('dataset/test.keras', 'r') as f:
+        valData = {key: f[key][...] for key in f.keys()}
+        
+    print("Loading validation labels...")
+    with h5py.File('dataset/testlabel.keras', 'r') as f:
+        vallabelData = {key: f[key][...] for key in f.keys()}
+        
     Xval = np.float32(valData[feature])
     yval = np.float32(vallabelData[feature])
+    print("Validation shapes - Xval:", Xval.shape, "yval:", yval.shape)
+    print("Any NaN in validation - Xval:", np.any(np.isnan(Xval)), "yval:", np.any(np.isnan(yval)))
+    
     return (X, y, Xval, yval)
 
 class LearningRateSchedulerPerBatch(LearningRateScheduler):
@@ -153,15 +177,15 @@ def print_results(config, model, Xval, yval, classes):
     if config.trained_model:
         model.load_weights(config.trained_model)
     else:    
-        model.load_weights('models/{}-latest.hdf5'.format(config.feature))
+        model.load_weights('models/{}-latest.keras'.format(config.feature))
     # to combine different trained models. On testing  
     if config.ensemble:
-        model2.load_weight('models/weights-V1.hdf5')
+        model2.load_weight('models/weights-V1.keras')
         ypred_mat = (model.predict(Xval) + model2.predict(Xval))/2
     else:
         ypred_mat = model.predict(Xval)  
-    ypred_mat = ypred_mat[:,0]
-    yval = yval[:,0]
+
+    print("yval.shape",yval)
 
     ytrue = np.argmax(yval,axis=1)
     yscore = np.array([ypred_mat[x][ytrue[x]] for x in range(len(yval))])

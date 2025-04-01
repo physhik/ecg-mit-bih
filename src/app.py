@@ -15,7 +15,7 @@ app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024
 global classesM
 classesM = ['N','V','L','R','Paced','A','F']#,'f','j','E','a','J','Q','e','S']
 
-print('Check http://127.0.0.1:5000/')
+print('Check http://127.0.0.1:5002/')
 
 
 def model_predict(img_path):
@@ -45,7 +45,6 @@ def upload():
         if not f:
             return "No file!"
         basepath = os.path.dirname(__file__)
-        mkdir_recursive('uploads')
         
         file_path = os.path.join(basepath, 'uploads', secure_filename(f.filename))
         try:
@@ -59,14 +58,31 @@ def upload():
 
         result = str(length) +" parts of the divided data were estimated as the followings with paired probabilities. \n"+result
         
-        return result
+        return format_result(result)
     return None
+
+def format_result(text):
+    # Extract the summary part at the end
+    summary_start = text.rfind(")") + 1
+    summary = text[summary_start:].strip()
+    data = text[:summary_start].strip()
+
+    # Format the summary sentence
+    summary_parts = summary.split(", ")
+    formatted_summary = "The results show: "
+    formatted_summary += ", ".join(f"{part.split('-')[1]} beats labeled as {part.split('-')[0]}" for part in summary_parts)
+
+    # Combine the formatted parts
+    formatted_text = f"{data}, {formatted_summary}."
+    return formatted_text
+
+
 
 
 if __name__ == '__main__':
     config = get_config()
-    #app.run(port=5001, debug=True)
+    #app.run(port=5002, debug=True)
 
     # Serve the app with gevent
-    http_server = WSGIServer(('', 5000), app)
+    http_server = WSGIServer(('', 5002), app)
     http_server.serve_forever()
