@@ -8,24 +8,22 @@ and focus on training using a MIT-BIH dataset. If you want to train using CINC o
 
 Introduction to MIT-BIH dataset at physionet : https://physionet.org/physiobank/database/mitdb/
 
-### Dependency 
+### Dependency (Updated, April 1, 2025)
 
-Consistent with the environment of Google colab with wfdb, deepdish installations and numpy reinstallation. 
-
-- Python >= 3.6.7
-- keras==2.2.5
-- tensorflow==1.15.0 
-- scikit-learn==0.21.3
-- wfdb==2.2.1
-- deepdish==0.3.6
-- scipy==1.3.1
-- numpy==1.15.4
-- tqdm==4.36.1
-- six==1.12.0
-- Flask==1.1.1
-- gevent==1.4.0
-- werkzeug==0.16.0
-- virtualenv==16.7.7
+- Python == 3.12.9
+- Flask==3.1.0
+- gevent==24.11.1
+- keras==3.9.1
+- numpy==2.1.3
+- pip-tools==7.4.1
+- scikit-learn==1.6.1
+- scipy==1.15.2
+- six==1.17.0
+- tensorflow==2.19.0
+- tensorflow-metal==1.2.0
+- tqdm==4.67.1
+- Werkzeug==3.1.3
+- wfdb==4.2.0
 
 
 
@@ -36,8 +34,7 @@ I recommend using a vitual enviroment for Python, so run setup.sh in order to in
 ```
 $ git clone https://github.com/physhik/ecg-mit-bih.git
 $ cd ecg-mit-bih
-$ pip install virtualenv
-$ virtualenv -p python ecg-env
+$ python -m venv ecg-env
 $ source ./ecg-env/bin/activate
 (ecg-env) $ pip install -r requrirements.txt
 (ecg-env) $ python src/data.py --downloading True
@@ -68,7 +65,7 @@ In case, you do not have a GPU above a decent performance, you might be able to 
 
 ### Flask web app
 
-The flask web app is based on the 500 stared [Github repo](https://github.com/mtobeiyf/keras-flask-deploy-webapp). 
+The flask web app is based on the keras-flask-deploy [Github repo](https://github.com/mtobeiyf/keras-flask-deploy-webapp). 
 
 #### Run app.py
 ```
@@ -83,8 +80,8 @@ and choose a csv heart heat signal and click predict, and see the result.
 
 I have put one csv file in static/asset directory. The first value of the column become sample rate of the web app. If you use your own heart beat csv file, insert the sample at the first, too.   
 
+### Using Docker, Buld and run an image for the ECG trained model.(Not yet updated)
 
-### Using Docker, Buld and run an image for the ECG trained model.
 
 After installation of Docker, 
 
@@ -93,7 +90,7 @@ $ docker build -t ecg-app .
 $ docker run -d -p 5000:5000 ecg-app
 ```
 
-### Pull an built-image from Docker hub
+### Pull an built-image from Docker hub (Not yet updated)
 
 Or for your convenience, pull the image from Docker hub by 
 
