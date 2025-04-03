@@ -86,20 +86,8 @@ I have put one csv file in static/asset directory. The first value of the column
 After installation of Docker, 
 
 ```
-$ docker build -t ecg-app .  
-$ docker run -d -p 5000:5000 ecg-app
+$ docker-compose up -d .  
 ```
-
-### Pull an built-image from Docker hub (Not yet updated)
-
-Or for your convenience, pull the image from Docker hub by 
-
-```
-$ docker pull physhik/ecg-app:1 
-$ docker run -d -p 5000:5000 physhik/ecg-app:1
-```
-
-and then open http://localhost:5000 after a while installing the app in the container. 
 
 
 

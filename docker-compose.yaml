@@ -1,0 +1,16 @@
+version: '3.9'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5002:5002"
+    volumes:
+      - ./src:/usr/src/app/src
+      - ./models:/usr/src/app/src/models
+      - ./training2017:/usr/src/app/src/training2017
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: ["python", "app.py"]
