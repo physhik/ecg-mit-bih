@@ -203,7 +203,7 @@ def add_noise(config):
     try:
         testlabel = list(csv.reader(open('training2017/REFERENCE.csv')))
     except:
-        cmd = "curl -O https://archive.physionet.org/challenge/2017/training2017.zip"
+        cmd = "curl -O https://physionet.org/files/challenge-2017/1.0.0/training2017.zip"
         os.system(cmd)
         os.system("unzip training2017.zip")
         testlabel = list(csv.reader(open('training2017/REFERENCE.csv')))
